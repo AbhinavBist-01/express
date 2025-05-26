@@ -1,14 +1,15 @@
+import "dotenv/config";
 import express from "express";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// add new tea
 app.use(express.json());
 
 let teaData = [];
 let nextId = 1;
 
+// add new tea
 app.post("/teas", (req, res) => {
   const { name, price } = req.body;
   const newTea = { id: nextId++, name, price };
@@ -31,7 +32,6 @@ app.get("/teas/:id", (req, res) => {
 });
 
 // update tea
-
 app.put("/teas/:id", (req, res) => {
   const tea = teaData.find((t) => t.id === parseInt(req.params.id));
   if (!tea) {
